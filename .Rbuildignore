@@ -1,2 +1,4 @@
 ^anthromix\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
+^rawdatafiles$
