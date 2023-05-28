@@ -9,6 +9,8 @@ refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
   tidyr::fill(Group, .direction = "down") %>%
   dplyr::filter(!(is.na(d15N) & is.na(d13C))) %>%
   dplyr::select(-`...5`, -`...6`, -`...7`, -`...8`) %>%
-  dplyr::relocate(Group)
+  dplyr::relocate(Group) %>%
+  dplyr::mutate(d15N = as.numeric(d15N),
+                d13C = as.numeric(d13C))
 
 usethis::use_data(refvals, overwrite = TRUE)
