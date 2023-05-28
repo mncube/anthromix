@@ -2,6 +2,7 @@
 require(dplyr)
 require(stringr)
 require(readr)
+require(tidyr)
 refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                               sheet = "Reference Sources") %>%
   dplyr::rename(d15N = δ15N, d13C = δ13C) %>%
@@ -16,6 +17,7 @@ refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                               ~stringr::str_replace(.,"−", "-"))) %>%
   dplyr::mutate(d15N = readr::parse_number(d15N),
                 d13C = readr::parse_number(d13C)) %>%
-  dplyr::filter(Group != "C4 Plants")
+  dplyr::filter(Group != "C4 Plants") %>%
+  tidyr::drop_na(d15N, d13C)
 
 usethis::use_data(refvals, overwrite = TRUE)
