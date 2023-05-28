@@ -10,7 +10,9 @@ refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
   dplyr::filter(!(is.na(d15N) & is.na(d13C))) %>%
   dplyr::select(-`...5`, -`...6`, -`...7`, -`...8`) %>%
   dplyr::relocate(Group) %>%
-  dplyr::mutate(d15N = as.numeric(d15N),
-                d13C = as.numeric(d13C))
+  dplyr::mutate(dplyr::across(starts_with("d1"),
+                              ~stringr::str_replace(.,"−", "-"))) %>%
+  dplyr::mutate(d15N = readr::parse_number(d15N),
+                d13C = readr::parse_number(d13C))
 
 usethis::use_data(refvals, overwrite = TRUE)
