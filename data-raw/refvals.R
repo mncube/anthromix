@@ -13,6 +13,7 @@ refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
   dplyr::mutate(dplyr::across(starts_with("d1"),
                               ~stringr::str_replace(.,"−", "-"))) %>%
   dplyr::mutate(d15N = readr::parse_number(d15N),
-                d13C = readr::parse_number(d13C))
+                d13C = readr::parse_number(d13C)) %>%
+  dplyr::filter(Group != "C4 Plants")
 
 usethis::use_data(refvals, overwrite = TRUE)
