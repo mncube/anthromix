@@ -1,5 +1,7 @@
 ## code to prepare `tab2` dataset goes here
 require(dplyr)
+require(stringr)
+require(readr)
 tab2 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                               sheet = "OM Full Comparison") %>%
   dplyr::select(Cemetary, UniqueID = `Unique ID`, d15N = δ15N, d13C = δ13C,

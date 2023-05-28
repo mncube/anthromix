@@ -1,5 +1,7 @@
 ## code to prepare `refvals` dataset goes here
 require(dplyr)
+require(stringr)
+require(readr)
 refvals <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                               sheet = "Reference Sources") %>%
   dplyr::rename(d15N = δ15N, d13C = δ13C) %>%
