@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^rawdatafiles$
+^mixing_model_output$
