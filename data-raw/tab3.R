@@ -1,10 +1,10 @@
-## code to prepare `tab2` dataset goes here
+## code to prepare `tab3` dataset goes here
 require(dplyr)
 require(stringr)
 require(readr)
 require(tidyr)
-tab2 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
-                              sheet = "OM Full Comparison") %>%
+tab3 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
+                           sheet = "OM Peasant-Time Comparison") %>%
   dplyr::select(Site = Cemetary, UniqueID = `Unique ID`, d15N = δ15N, d13C = δ13C,
                 Period = `Arm Pos/Period`, Stat) %>%
   dplyr::mutate(dplyr::across(starts_with("d1"),
@@ -13,4 +13,4 @@ tab2 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                 d13C = readr::parse_number(d13C)) %>%
   tidyr::drop_na(d15N, d13C)
 
-usethis::use_data(tab2, overwrite = TRUE)
+usethis::use_data(tab3, overwrite = TRUE)
