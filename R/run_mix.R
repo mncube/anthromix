@@ -1,3 +1,23 @@
+#' Run MixSIAR Model
+#'
+#' @param mix_data mix data for MixSIAR::load_mix_data function
+#' @param factors MixSIAR::load_mix_data factors parameter
+#' @param fac_random MixSIAR::load_mix_data fac_random parameter
+#' @param fac_nested MixSIAR::load_mix_data fac_nested parameter
+#' @param biplot_name pass filename to MixSIAR::plot_data filename parameter
+#' @param alpha.prior Pass alpha.prior value to MixSIAR::plot_prior and MixSIAR::run_model
+#' @param priorplot_name Pass filename to MixSIAR::plot_prior filename parameter
+#' @param JAGSmodelname Pass filename to MixSIAR::write_JAGS_model filename parameter
+#' @param resid_err Pass to MixSIAR::write_JAGS_model resid_err parameter
+#' @param process_err Pass to MixSIAR::write_JAGS_model process_err parameter
+#' @param run Pass to MixSIAR::run_model run parameter
+#' @param new_dir Pass create directory name to mixsiar_save
+#'
+#' @return MixSIAR Output
+#' @export
+#'
+#' @examples
+#' #See test-run_mix
 run_mix <- function(mix_data,
                     factors = c("Site", "Period"),
                     fac_random = c(TRUE, TRUE),
