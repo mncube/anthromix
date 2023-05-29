@@ -31,6 +31,9 @@ run_mix <- function(mix_data,
                     run = "test",
                     new_dir = "mixing_model_output"){
 
+  # Collect console output
+  sink(file = "consoleoutput.txt")
+
   # Load Data
   utils::write.csv(mix_data, "tmpmix.csv", row.names = FALSE)
   md <- MixSIAR::load_mix_data(filename = "tmpmix.csv",
@@ -148,6 +151,9 @@ run_mix <- function(mix_data,
   cat("Convex Hull Area: ", CHA, "\n")
 
   out <- list(CHA = CHA, mix_run = mix_run)
+
+  # Close sink
+  sink(file = NULL)
 
   return(out)
 }
