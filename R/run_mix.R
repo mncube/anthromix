@@ -114,7 +114,8 @@ run_mix <- function(mix_data,
     #List files with auto-generated names
     file_list <- list("priorplot.pdf", "pairs_plot.pdf",
                       "summary_statistics.txt", "diagnostics.txt",
-                      "diagnostics.pdf", "tmpdisc.csv", "tmpmix.csv", "tmpsource.csv")
+                      "diagnostics.pdf", "tmpdisc.csv", "tmpmix.csv",
+                      "tmpsource.csv", "consoleoutput.txt")
 
     #Append model_filename to file_list
     file_list <- append(file_list, model_filename)
@@ -146,14 +147,15 @@ run_mix <- function(mix_data,
     purrr::map(file_list, file.remove)
   }
 
-  mixsiar_save()
-
   cat("Convex Hull Area: ", CHA, "\n")
 
   out <- list(CHA = CHA, mix_run = mix_run)
 
   # Close sink
   sink(file = NULL)
+
+  # Move output to new directory
+  mixsiar_save()
 
   return(out)
 }
