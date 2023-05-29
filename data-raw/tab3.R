@@ -24,6 +24,9 @@ tab3 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                                         Stat == 2 ~ "Monk",
                                         TRUE ~ NA)) %>%
   dplyr::mutate(Stat = factor(Stat, levels = c("Peasant", "Elite", "Monk"),
-                              labels = c("Peasant", "Elite", "Monk")))
+                              labels = c("Peasant", "Elite", "Monk"))) %>%
+  dplyr::mutate(Site = dplyr::case_when(Site == "OmKloster" ~ "OM Kloster",
+                                        Site == "StMikkel" ~ "St. Mikkel",
+                                        TRUE ~ Site))
 
 usethis::use_data(tab3, overwrite = TRUE)
