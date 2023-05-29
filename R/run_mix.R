@@ -52,13 +52,21 @@ run_mix <- function(mix_data,
                                  mix = md)
 
   # Plot Data
-  MixSIAR::plot_data(filename = biplot_name,
+  p <- MixSIAR::plot_data(filename = biplot_name,
                      plot_save_pdf = FALSE,
-                     plot_save_png = TRUE,
+                     plot_save_png = FALSE,
                      mix = md,
                      source = sd,
                      discr = dd,
-                     return_obj = FALSE)
+                     return_obj = TRUE)
+
+  p <- p + ggplot2::scale_color_manual(values = rep("black", 20)) +
+    ggplot2::theme(legend.position="none")
+
+  ggplot2::ggsave(paste0(biplot_name, "_1_2.png"), p,
+                  width = 2100,
+                  height = 2100,
+                  units = "px")
 
   # Calculate Convex Hull Area
   CHA <- MixSIAR::calc_area(mix = md,
