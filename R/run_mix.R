@@ -1,4 +1,4 @@
-run_mix <- function(mix_data = tab3,
+run_mix <- function(mix_data,
                     factors = c("Site", "Period"),
                     fac_random = c(TRUE, TRUE),
                     fac_nested = c(FALSE, TRUE),
