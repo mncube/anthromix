@@ -31,6 +31,9 @@ run_mix <- function(mix_data,
                     run = "test",
                     new_dir = "mixing_model_output"){
 
+  # Turn off gr device
+  grDevices::dev.off()
+
   # Load Data
   utils::write.csv(mix_data, "tmpmix.csv", row.names = FALSE)
   md <- MixSIAR::load_mix_data(filename = "tmpmix.csv",
