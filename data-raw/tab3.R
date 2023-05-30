@@ -25,7 +25,7 @@ tab3 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                                         TRUE ~ NA)) %>%
   dplyr::mutate(Stat = factor(Stat, levels = c("Peasant", "Elite", "Monk"),
                               labels = c("Peasant", "Elite", "Monk"))) %>%
-  dplyr::mutate(Site = dplyr::case_when(Site == "OmKloster" ~ "OM Kloster",
+  dplyr::mutate(Site = dplyr::case_when(Site == "OmKloster" ~ "Om Kloster",
                                         Site == "StMikkel" ~ "St. Mikkel",
                                         TRUE ~ Site)) %>%
   dplyr::mutate(`Stat Period` = ifelse(is.na(Stat) | is.na(Period), NA, paste(Stat, Period))) %>%

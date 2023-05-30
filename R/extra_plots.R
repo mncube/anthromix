@@ -110,7 +110,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
   # }
 
   if (Sites == 1){
-    if (source_level == "OM Kloster"){
+    if (source_level == "Om Kloster"){
       conscolor <- "#00BFC4"
     } else if (source_level == "St. Mikkel"){
       conscolor <- "#D89000"
@@ -118,10 +118,11 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
       conscolor = "#39B600"
     } else if (source_level == "Tirup"){
       conscolor = "#FF62BC"
-    } else {
-      conscolor = c("OM Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
-                    "Ribe" = "#39B600", "Tirup" = "#FF62BC")
     }
+  } else {
+      conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
+                    "Ribe" = "#39B600", "Tirup" = "#FF62BC")
+      }
 
     p <- p +
       ggplot2::scale_color_manual(values =
@@ -129,7 +130,6 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                                       "Freshwater Fish" = "#A3A500",
                                       "Marine Protein" = "#00A7FF", "Terrestrial Protein" = "#E76BF3",
                                       conscolor))
-  }
 
   if (timer == "Stat") {
     shapes <- c("Peasant" = "square",
@@ -320,7 +320,7 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
     ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
 
   if (Sites == 1){
-    if (source_level == "OM Kloster"){
+    if (source_level == "Om Kloster"){
       conscolor <- "#00BFC4"
     } else if (source_level == "St. Mikkel"){
       conscolor <- "#D89000"
@@ -328,8 +328,9 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
       conscolor = "#39B600"
     } else if (source_level == "Tirup"){
       conscolor = "#FF62BC"
-    } else {
-      conscolor = c("OM Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
+    }
+  } else {
+      conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
                    "Ribe" = "#39B600", "Tirup" = "#FF62BC")
     }
 
@@ -339,7 +340,6 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                                       "Freshwater Fish" = "#A3A500",
                                       "Marine Protein" = "#00A7FF", "Terrestrial Protein" = "#E76BF3",
                                       conscolor))
-  }
 
   if (timer == "Stat") {
     shapes <- c("Peasant" = "square",
