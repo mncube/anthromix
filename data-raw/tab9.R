@@ -35,7 +35,8 @@ tab9 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                                                   "Monk A", "Monk B", "Monk C", "Monk D"),
                                        labels = c("Peasant A", "Peasant B", "Peasant C", "Peasant D",
                                                   "Elite A", "Elite B", "Elite C", "Elite D",
-                                                  "Monk A", "Monk B", "Monk C", "Monk D")))
+                                                  "Monk A", "Monk B", "Monk C", "Monk D"))) %>%
+  dplyr::mutate(Site = factor(Site))
 
 
 usethis::use_data(tab9, overwrite = TRUE)

@@ -123,7 +123,12 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                     "Ribe" = "#39B600", "Tirup" = "#FF62BC")
     }
 
-    p <- p + ggplot2::scale_color_manual(values = c("#F8766D", "#A3A500", "#00A7FF", "#E76BF3",conscolor))
+    p <- p +
+      ggplot2::scale_color_manual(values =
+                                    c("C3 Plants" = "#F8766D",
+                                      "Freshwater Fish" = "#A3A500",
+                                      "Marine Protein" = "#00A7FF", "Terrestrial Protein" = "#E76BF3",
+                                      conscolor))
   }
 
   if (timer == "Stat") {
@@ -328,7 +333,12 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                    "Ribe" = "#39B600", "Tirup" = "#FF62BC")
     }
 
-    p <- p + ggplot2::scale_color_manual(values = c("#F8766D", "#A3A500", "#00A7FF", "#E76BF3",conscolor))
+    p <- p +
+      ggplot2::scale_color_manual(values =
+                                    c("C3 Plants" = "#F8766D",
+                                      "Freshwater Fish" = "#A3A500",
+                                      "Marine Protein" = "#00A7FF", "Terrestrial Protein" = "#E76BF3",
+                                      conscolor))
   }
 
   if (timer == "Stat") {
