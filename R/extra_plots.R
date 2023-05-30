@@ -309,14 +309,14 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                                             source_level)))
 
   #Create raw data isospace plot
-  p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d13C_edge, y=d15N_edge, colour =Group)) +
+  p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d13C_edge, y=d15N_edge, colour =Group, shape = .data[[timer]])) +
     #ggplot2::geom_point(size = 0.1, stroke = 0, shape = 16) +
     ggplot2::geom_point(size = 0.1, stroke = 0) +
     ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
     ggplot2::geom_errorbarh(ggplot2::aes(xmin=d13C_mean-d13C_sd, xmax=d13C_mean+d13C_sd)) +
     ggplot2::geom_errorbar(ggplot2::aes(ymin=d15N_mean-d15N_sd, ymax=d15N_mean+d15N_sd)) +
-    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group, shape = .data[[timer]])) +
-    #ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
+    #ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group, shape = .data[[timer]])) +
+    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
     ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
     ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)"))) +
     ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
