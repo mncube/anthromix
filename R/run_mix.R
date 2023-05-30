@@ -67,7 +67,8 @@ run_mix <- function(mix_data,
                      discr = dd,
                      return_obj = TRUE)
 
-  p <- p + ggplot2::scale_color_manual(values = rep("black", 20)) +
+  p <- p + ggplot2::scale_color_manual(values = rep("black", 300)) +
+    ggplot2::scale_shape_manual(values = rep("circle", 300)) +
     ggplot2::theme(legend.position="none")
 
   ggplot2::ggsave(paste0(biplot_name, "_1_2.png"), p,
