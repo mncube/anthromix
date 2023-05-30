@@ -111,13 +111,13 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
 
   if (Sites == 1){
     if (source_level == "Om Kloster"){
-      conscolor <- "#00BFC4"
+      conscolor <- c("Om Kloster" = "#00BFC4")
     } else if (source_level == "St. Mikkel"){
-      conscolor <- "#D89000"
+      conscolor <- c("St. Mikkel" = "#D89000")
     } else if (source_level == "Ribe") {
-      conscolor = "#39B600"
+      conscolor = c("Ribe" = "#39B600")
     } else if (source_level == "Tirup"){
-      conscolor = "#FF62BC"
+      conscolor = c("Tirup" = "#FF62BC")
     }
   } else {
       conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
@@ -323,13 +323,13 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
 
   if (Sites == 1){
     if (source_level == "Om Kloster"){
-      conscolor <- "#00BFC4"
+      conscolor <- c("Om Kloster" = "#00BFC4")
     } else if (source_level == "St. Mikkel"){
-      conscolor <- "#D89000"
+      conscolor <- c("St. Mikkel" = "#D89000")
     } else if (source_level == "Ribe") {
-      conscolor = "#39B600"
+      conscolor = c("Ribe" = "#39B600")
     } else if (source_level == "Tirup"){
-      conscolor = "#FF62BC"
+      conscolor = c("Tirup" = "#FF62BC")
     }
   } else {
       conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
