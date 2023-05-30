@@ -16,7 +16,7 @@ tab2 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                                    Period == "b" ~ "B",
                                    Period == "c" ~ "C",
                                    Period == "d" ~ "D",
-                                   TRUE ~ NA)) %>%
+                                   TRUE ~ Period)) %>%
   dplyr::mutate(Period = factor(Period, levels = c("A", "B", "C", "D"),
                                    labels = c("A", "B", "C", "D"))) %>%
   dplyr::mutate(Stat = dplyr::case_when(Stat == 0 ~ "Peasant",
@@ -27,6 +27,14 @@ tab2 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
                                  labels = c("Peasant", "Elite", "Monk"))) %>%
   dplyr::mutate(Site = dplyr::case_when(Site == "OmKloster" ~ "OM Kloster",
                                         Site == "StMikkel" ~ "St. Mikkel",
-                                        TRUE ~ Site))
+                                        TRUE ~ Site)) %>%
+  dplyr::mutate(`Stat Period` = ifelse(is.na(Stat) | is.na(Period), NA, paste(Stat, Period))) %>%
+  dplyr::mutate(`Stat Period` = factor(`Stat Period`,
+                                       levels = c("Peasant A", "Peasant B", "Peasant C", "Peasant D",
+                                                                 "Elite A", "Elite B", "Elite C", "Elite D",
+                                                                 "Monk A", "Monk B", "Monk C", "Monk D"),
+                                       labels = c("Peasant A", "Peasant B", "Peasant C", "Peasant D",
+                                                  "Elite A", "Elite B", "Elite C", "Elite D",
+                                                  "Monk A", "Monk B", "Monk C", "Monk D")))
 
 usethis::use_data(tab2, overwrite = TRUE)

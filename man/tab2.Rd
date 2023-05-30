@@ -15,6 +15,7 @@ A data frame with 98 rows and 6 columns:
 \item{d13C}{#}
 \item{Period}{#}
 \item{Stat}{#}
+\item{Stat Period}{#}
 }
 }
 }

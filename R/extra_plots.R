@@ -65,16 +65,22 @@ biplot_raw_source <- function(data = refvals, title = "IsoSpaceFoodSourceDist", 
 #' @param mixdata Cosumer data
 #' @param title Title
 #' @param Sites Number of sites
+#' @param timer Time stratification variable
 #'
 #' @return Plot
 #' @export
 #'
 #' @examples
 #' #Add later
-biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "", Sites = 1){
+biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawSourceandConsumer", Sites = 1,
+                               timer = "Stat"){
 
   data <- mixdata %>% dplyr::rename(Group = Site, ID = UniqueID) %>%
-    dplyr::bind_rows(refdata)
+    dplyr::bind_rows(refdata %>% dplyr::mutate(Stat = "Source",
+                                               Period = "Source",
+                                               `Stat Period` = "Source") %>%
+                       dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), as.factor))) %>%
+    dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), ~forcats::fct_relevel(., "Source", after = Inf)))
 
   source_level <-
     c(unique(data$Group))[!(unique(data$Group) %in%
@@ -87,7 +93,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "", Sites = 1
                                                 labels = c("C3 Plants", "Freshwater Fish", "Marine Protein", "Terrestrial Protein",
                                                            source_level)))
 
-  plotter <- ggplot2::ggplot(data, ggplot2::aes(x = d13C, y = d15N, colour = Group)) +
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = d13C, y = d15N, colour = Group, shape = .data[[timer]])) +
     ggplot2::geom_point(alpha = 0.7, size = 2) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", legend.box = "vertical") +
     ggplot2::guides(fill=ggplot2::guide_legend(nrow=2, byrow=TRUE)) +
@@ -120,10 +126,25 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "", Sites = 1
     p <- p + ggplot2::scale_color_manual(values = c("#F8766D", "#A3A500", "#00A7FF", "#E76BF3",conscolor))
   }
 
+  if (timer == "Stat") {
+    shapes <- c("Peasant" = "square",
+                "Elite" = "triangle",
+                "Monk" = "plus",
+                "Source" = "circle")
+  } else if (timer == "Period"){
+    shapes <- c("A" = "square",
+                "B" = "triangle",
+                "C" = "plus",
+                "D" = "diamond",
+                "Source" = "circle")
+  }
+
+  p <- p + ggplot2::scale_shape_manual(values = c(shapes))
+
   #Create titles to save graphs
   title_plot <- paste0(title, ".png")
 
-  out <- list(plotter, ggplot2::ggsave(title_plot, plotter,
+  out <- list(p, ggplot2::ggsave(title_plot, p,
                                        width = 2100,
                                        height = 2100,
                                        units = "px"))
@@ -133,7 +154,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "", Sites = 1
 }
 
 
-#' Siyrce Biplot
+#' Source Biplot
 #'
 #' @param data Source data
 #' @param Group Group variable
@@ -147,7 +168,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "", Sites = 1
 #' @examples
 #' # Add later
 source_biplot <- function(data = refvals, Group = Group, var1 = d13C, var2 = d15N,
-                          title = ""){
+                          title = "IsoSpaceSourceSummary"){
   #Store tdf values
   tdf_d15N_mean <- discrimination$Meand15N[[1]]
   tdf_d15N_sd   <- discrimination$SDd15N[[1]]
@@ -198,13 +219,15 @@ source_biplot <- function(data = refvals, Group = Group, var1 = d13C, var2 = d15
 #' @param mixdata Consumer data
 #' @param Sites Number of sites
 #' @param title Title
+#' @param timer Time stratification variable
 #'
 #' @return A plot
 #' @export
 #'
 #' @examples
 #' #Add later
-sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = ""){
+sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "IsoSpaceSSRC",
+                             timer = "Stat"){
 
   # Get edge data for sources
   combined_summary <- refdata %>%
@@ -262,7 +285,11 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = ""){
     dplyr::select(-d13C, -d15N)
 
   # Combine Source and Consumer Data
-  data <- all_source %>% dplyr::bind_rows(mixdata)
+  data <- mixdata %>% dplyr::bind_rows(all_source %>% dplyr::mutate(Stat = "Source",
+                                       Period = "Source",
+                                       `Stat Period` = "Source") %>%
+                                         dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), as.factor))) %>%
+    dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), ~forcats::fct_relevel(., "Source", after = Inf)))
 
   # Process Factor
   source_level <-
@@ -282,7 +309,7 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = ""){
     ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
     ggplot2::geom_errorbarh(ggplot2::aes(xmin=d13C_mean-d13C_sd, xmax=d13C_mean+d13C_sd)) +
     ggplot2::geom_errorbar(ggplot2::aes(ymin=d15N_mean-d15N_sd, ymax=d15N_mean+d15N_sd)) +
-    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
+    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group, shape = .data[[timer]])) +
     ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
     ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)"))) +
     ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
@@ -303,6 +330,21 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = ""){
 
     p <- p + ggplot2::scale_color_manual(values = c("#F8766D", "#A3A500", "#00A7FF", "#E76BF3",conscolor))
   }
+
+  if (timer == "Stat") {
+    shapes <- c("Peasant" = "square",
+                "Elite" = "triangle",
+                "Monk" = "plus",
+                "Source" = "circle")
+  } else if (timer == "Period"){
+    shapes <- c("A" = "square",
+                "B" = "triangle",
+                "C" = "plus",
+                "D" = "diamond",
+                "Source" = "circle")
+  }
+
+  p <- p + ggplot2::scale_shape_manual(values = c(shapes))
 
   #Create titles to save graphs
   title_plot <- paste0(title, ".png")

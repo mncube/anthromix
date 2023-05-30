@@ -4,7 +4,13 @@
 \alias{sourcecon_biplot}
 \title{Source and Consumer Biplot}
 \usage{
-sourcecon_biplot(refdata = refvals, mixdata, Sites = 1, title = "")
+sourcecon_biplot(
+  refdata = refvals,
+  mixdata,
+  Sites = 1,
+  title = "IsoSpaceSSRC",
+  timer = "Stat"
+)
 }
 \arguments{
 \item{refdata}{Source data}
@@ -14,6 +20,8 @@ sourcecon_biplot(refdata = refvals, mixdata, Sites = 1, title = "")
 \item{Sites}{Number of sites}
 
 \item{title}{Title}
+
+\item{timer}{Time stratification variable}
 }
 \value{
 A plot

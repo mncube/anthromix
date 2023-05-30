@@ -12,6 +12,8 @@
 #' @param process_err Pass to MixSIAR::write_JAGS_model process_err parameter
 #' @param run Pass to MixSIAR::run_model run parameter
 #' @param new_dir Pass create directory name to mixsiar_save
+#' @param Sites Number of sites in plot (1 or more than one)
+#' @param timer Timer variable (Stat or Period)
 #'
 #' @return MixSIAR Output
 #' @export
@@ -19,9 +21,9 @@
 #' @examples
 #' #See test-run_mix
 run_mix <- function(mix_data,
-                    factors = c("Site", "Period"),
-                    fac_random = c(TRUE, TRUE),
-                    fac_nested = c(FALSE, TRUE),
+                    factors = c("Period"),
+                    fac_random = c(TRUE),
+                    fac_nested = c(FALSE),
                     biplot_name = "biplot",
                     alpha.prior = 1,
                     priorplot_name = "priorplot",
@@ -29,7 +31,12 @@ run_mix <- function(mix_data,
                     resid_err = TRUE,
                     process_err = TRUE,
                     run = "test",
-                    new_dir = "mixing_model_output"){
+                    new_dir = "mixing_model_output",
+                    Sites = 1,
+                    timer = "Period"){
+  #Drop NAs
+  mix_data <- mix_data %>%
+    tidyr::drop_na(d13C, d15N, tidyselect::any_of(timer))
 
   # Collect console output
   sink(file = "consoleoutput.txt")
@@ -67,6 +74,22 @@ run_mix <- function(mix_data,
                   width = 2100,
                   height = 2100,
                   units = "px")
+
+  # Plot Raw Source
+  biplot_raw_source()
+
+  # Plot Raw Source and Consumers
+  biplot_raw_sourcon(mixdata = mix_data, Sites = Sites, timer = timer)
+
+  # Plot Source Summary
+  source_biplot()
+
+  # Plot Source Summary Raw Consumer
+  sourcecon_biplot(mixdata = mix_data, Sites = Sites, timer = timer)
+
+  # Box Plot
+  main_box(mixdata = mix_data)
+
 
   # Calculate Convex Hull Area
   CHA <- MixSIAR::calc_area(mix = md,
@@ -123,7 +146,14 @@ run_mix <- function(mix_data,
     file_list <- list("priorplot.pdf", "pairs_plot.pdf",
                       "summary_statistics.txt", "diagnostics.txt",
                       "diagnostics.pdf", "tmpdisc.csv", "tmpmix.csv",
-                      "tmpsource.csv", "consoleoutput.txt")
+                      "tmpsource.csv", "consoleoutput.txt",
+                      "IsoSpaceFoodSourceDist.png",
+                      "IsoSpaceFoodSourceDistlegend.png",
+                      "IsoSpaceRawSourceandConsumer.png",
+                      "IsoSpaceSourceSummary.png",
+                      "IsoSpaceSSRC.png",
+                      "d15N_box.png",
+                      "d13C_box.png")
 
     #Append model_filename to file_list
     file_list <- append(file_list, model_filename)
@@ -155,7 +185,83 @@ run_mix <- function(mix_data,
     purrr::map(file_list, file.remove)
   }
 
+  summarize_func <- function(data, x, grouper = NULL){
+
+    if (is.null(grouper)){
+      data %>%
+        dplyr::summarize(min = min(.data[[x]]),
+                         q1 = stats::quantile(.data[[x]], 0.25),
+                         median = stats::median(.data[[x]]),
+                         q3 = stats::quantile(.data[[x]], 0.75),
+                         max = max(.data[[x]]),
+                         mean = mean(.data[[x]]),
+                         sd = stats::sd(.data[[x]]),
+                         n = dplyr::n()
+                         )
+    } else {
+      data %>%
+        dplyr::group_by(.data[[grouper]]) %>%
+        dplyr::summarize(min = min(.data[[x]]),
+                         q1 = stats::quantile(.data[[x]], 0.25),
+                         median = stats::median(.data[[x]]),
+                         q3 = stats::quantile(.data[[x]], 0.75),
+                         max = max(.data[[x]]),
+                         mean = mean(.data[[x]]),
+                         sd = stats::sd(.data[[x]]),
+                         n = dplyr::n()
+                         )
+    }
+  }
+
+  source_d13C <- summarize_func(refvals, "d13C")
+  source_d15N <- summarize_func(refvals, "d15N")
+  source_d13C_Group <- summarize_func(refvals, "d13C", grouper = "Group")
+  source_d15N_Group <- summarize_func(refvals, "d15N", grouper = "Group")
+  cons_d13C <- summarize_func(mix_data, "d13C")
+  cons_d15N <- summarize_func(mix_data, "d15N")
+  cons_d13C_time <- summarize_func(mix_data, "d13C", grouper = timer)
+  cons_d15N_timer <- summarize_func(mix_data, "d15N", grouper = timer)
+
+  if (Sites != 1){
+    cons_d13C_Site <- summarize_func(mix_data, "d13C", "Site")
+    cons_d15N_Site <- summarize_func(mix_data, "d15N", "Site")
+  }
+
   cat("Convex Hull Area: ", CHA, "\n")
+  cat("Source Descriptives: d13C", "\n")
+  print(source_d13C)
+  cat("\n")
+  cat("Source Descriptives: d15N", "\n")
+  print(source_d15N)
+  cat("\n")
+  cat("Source Descriptives: d13C", "\n")
+  print(source_d13C_Group)
+  cat("\n")
+  cat("Source Descriptives: d15N", "\n")
+  print(source_d15N_Group)
+  cat("\n")
+  cat("Consumer Descriptives: d13C", "\n")
+  print(cons_d13C)
+  cat("\n")
+  cat("Consumer Descriptives: d15N", "\n")
+  print(cons_d15N)
+  cat("\n")
+  cat("Consumer Descriptives: d13C", "\n")
+  print(cons_d13C_time)
+  cat("\n")
+  cat("Consumer Descriptives: d15N", "\n")
+  print(cons_d15N_timer)
+  cat("\n")
+
+  if (Sites != 1){
+    cat("Consumer Descriptives: d13C", "\n")
+    print(cons_d13C_Site)
+    cat("\n")
+    cat("Consumer Descriptives: d15N", "\n")
+    print(cons_d15N_Site)
+    cat("\n")
+  }
+
 
   out <- list(CHA = CHA, mix_run = mix_run)
 

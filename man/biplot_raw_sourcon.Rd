@@ -4,7 +4,13 @@
 \alias{biplot_raw_sourcon}
 \title{Raw Source and Consumer Biplot}
 \usage{
-biplot_raw_sourcon(refdata = refvals, mixdata, title = "", Sites = 1)
+biplot_raw_sourcon(
+  refdata = refvals,
+  mixdata,
+  title = "IsoSpaceRawSourceandConsumer",
+  Sites = 1,
+  timer = "Stat"
+)
 }
 \arguments{
 \item{refdata}{Source data}
@@ -14,6 +20,8 @@ biplot_raw_sourcon(refdata = refvals, mixdata, title = "", Sites = 1)
 \item{title}{Title}
 
 \item{Sites}{Number of sites}
+
+\item{timer}{Time stratification variable}
 }
 \value{
 Plot

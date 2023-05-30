@@ -43,6 +43,7 @@
 #'   \item{d13C}{#}
 #'   \item{Period}{#}
 #'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
 #' }
 "tab2"
 
@@ -63,5 +64,24 @@
 #'   \item{d13C}{#}
 #'   \item{Period}{#}
 #'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
 #' }
 "tab3"
+
+#' Tab 9: All Site Peasants/Time Comparison
+#'
+#' This takes the Peasants (0) from all 4 sites (OM, SM, Tirup, Ribe) and compares
+#' them over the three time periods (A, B, and C/D).
+#'
+#' @format ## `tab9`
+#' A data frame with 200 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab9"

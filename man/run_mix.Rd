@@ -6,9 +6,9 @@
 \usage{
 run_mix(
   mix_data,
-  factors = c("Site", "Period"),
-  fac_random = c(TRUE, TRUE),
-  fac_nested = c(FALSE, TRUE),
+  factors = c("Period"),
+  fac_random = c(TRUE),
+  fac_nested = c(FALSE),
   biplot_name = "biplot",
   alpha.prior = 1,
   priorplot_name = "priorplot",
@@ -16,7 +16,9 @@ run_mix(
   resid_err = TRUE,
   process_err = TRUE,
   run = "test",
-  new_dir = "mixing_model_output"
+  new_dir = "mixing_model_output",
+  Sites = 1,
+  timer = "Period"
 )
 }
 \arguments{
@@ -43,6 +45,10 @@ run_mix(
 \item{run}{Pass to MixSIAR::run_model run parameter}
 
 \item{new_dir}{Pass create directory name to mixsiar_save}
+
+\item{Sites}{Number of sites in plot (1 or more than one)}
+
+\item{timer}{Timer variable (Stat or Period)}
 }
 \value{
 MixSIAR Output

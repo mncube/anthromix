@@ -2,14 +2,14 @@
 % Please edit documentation in R/extra_plots.R
 \name{source_biplot}
 \alias{source_biplot}
-\title{Siyrce Biplot}
+\title{Source Biplot}
 \usage{
 source_biplot(
   data = refvals,
   Group = Group,
   var1 = d13C,
   var2 = d15N,
-  title = ""
+  title = "IsoSpaceSourceSummary"
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ source_biplot(
 Plot
 }
 \description{
-Siyrce Biplot
+Source Biplot
 }
 \examples{
 # Add later
