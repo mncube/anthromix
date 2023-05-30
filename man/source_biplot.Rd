@@ -7,8 +7,8 @@
 source_biplot(
   data = refvals,
   Group = Group,
-  var1 = d13C,
-  var2 = d15N,
+  var1 = d15N,
+  var2 = d13C,
   title = "IsoSpaceSourceSummary"
 )
 }

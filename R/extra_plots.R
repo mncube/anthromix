@@ -16,13 +16,13 @@ biplot_raw_source <- function(data = refvals, title = "IsoSpaceFoodSourceDist", 
     dplyr::rename(Organism = PlotOrg)
 
 
-  plotter <- ggplot2::ggplot(data, ggplot2::aes(x = d13C, y = d15N, colour = Organism, shape = Group)) +
+  plotter <- ggplot2::ggplot(data, ggplot2::aes(x = d15N, y = d13C, colour = Organism, shape = Group)) +
     ggplot2::geom_point(alpha = 0.7, size = 2) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", legend.box = "vertical") +
     ggplot2::guides(fill=ggplot2::guide_legend(nrow=2, byrow=TRUE)) +
     ggplot2::ggtitle(title) +
-    ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)")))
+    ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)")))
 
   if (shrink_leg == TRUE){
     plotter <- plotter +
@@ -93,13 +93,13 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                                                 labels = c("C3 Plants", "Freshwater Fish", "Marine Protein", "Terrestrial Protein",
                                                            source_level)))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes(x = d13C, y = d15N, colour = Group, shape = .data[[timer]])) +
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = d15N, y = d13C, colour = Group, shape = .data[[timer]])) +
     ggplot2::geom_point(alpha = 0.7, size = 2) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", legend.box = "vertical") +
     ggplot2::guides(fill=ggplot2::guide_legend(nrow=2, byrow=TRUE)) +
     ggplot2::ggtitle(title) +
-    ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)"))) +
+    ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)"))) +
     ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
 
   # if (Sites == 1){
@@ -172,7 +172,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
 #'
 #' @examples
 #' # Add later
-source_biplot <- function(data = refvals, Group = Group, var1 = d13C, var2 = d15N,
+source_biplot <- function(data = refvals, Group = Group, var1 = d15N, var2 = d13C,
                           title = "IsoSpaceSourceSummary"){
   #Store tdf values
   tdf_d15N_mean <- discrimination$Meand15N[[1]]
@@ -194,17 +194,17 @@ source_biplot <- function(data = refvals, Group = Group, var1 = d13C, var2 = d15
     dplyr::ungroup() %>%
     dplyr::distinct({{Group}}, .keep_all = TRUE) %>%
     dplyr::select({{Group}}, var1_mean, var1_sd, var2_mean, var2_sd) %>%
-    dplyr::mutate(var1_mean = var1_mean + tdf_d13C_mean,
-                  var2_mean = var2_mean + tdf_d15N_mean,
-                  var1_sd = var1_sd + tdf_d13C_sd,
-                  var2_sd = var2_sd + tdf_d15N_sd)
+    dplyr::mutate(var1_mean = var1_mean + tdf_d15N_mean,
+                  var2_mean = var2_mean + tdf_d13C_mean,
+                  var1_sd = var1_sd + tdf_d15N_sd,
+                  var2_sd = var2_sd + tdf_d13C_sd)
 
   p <- ggplot2::ggplot(data = data_summary, ggplot2::aes(x=var1_mean, y=var2_mean, colour={{Group}})) +
     ggplot2::geom_point() +
     ggplot2::geom_linerange(ggplot2::aes(ymin=var2_mean-var2_sd, ymax=var2_mean+var2_sd)) +
     ggplot2::geom_linerange(ggplot2::aes(xmin=var1_mean-var1_sd, xmax=var1_mean+var1_sd)) +
-    ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)")))
+    ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)")))
 
   #Create titles to save graphs
   title_plot <- paste0(title, ".png")
@@ -309,16 +309,14 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                                             source_level)))
 
   #Create raw data isospace plot
-  p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d13C_edge, y=d15N_edge, colour =Group, shape = .data[[timer]])) +
-    #ggplot2::geom_point(size = 0.1, stroke = 0, shape = 16) +
+  p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d15N_edge, y= d13C_edge, colour =Group, shape = .data[[timer]])) +
     ggplot2::geom_point(size = 0.1, stroke = 0) +
-    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
-    ggplot2::geom_errorbarh(ggplot2::aes(xmin=d13C_mean-d13C_sd, xmax=d13C_mean+d13C_sd)) +
-    ggplot2::geom_errorbar(ggplot2::aes(ymin=d15N_mean-d15N_sd, ymax=d15N_mean+d15N_sd)) +
-    #ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group, shape = .data[[timer]])) +
-    ggplot2::geom_point(ggplot2::aes(x=d13C_mean, y=d15N_mean, colour=Group)) +
-    ggplot2::ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::xlab(expression(paste(delta^{13}, "C (\u2030)"))) +
+    ggplot2::geom_point(ggplot2::aes(x=d15N_mean, y= d13C_mean, colour=Group)) +
+    ggplot2::geom_errorbarh(ggplot2::aes(ymin=d13C_mean-d13C_sd, ymax=d13C_mean+d13C_sd)) +
+    ggplot2::geom_errorbar(ggplot2::aes(xmin=d15N_mean-d15N_sd, xmax=d15N_mean+d15N_sd)) +
+    ggplot2::geom_point(ggplot2::aes(x=d15N_mean, y=d13C_mean, colour=Group)) +
+    ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)"))) +
     ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
 
   if (Sites == 1){
