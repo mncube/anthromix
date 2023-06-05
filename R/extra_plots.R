@@ -66,6 +66,7 @@ biplot_raw_source <- function(data = refvals, title = "IsoSpaceFoodSourceDist", 
 #' @param title Title
 #' @param Sites Number of sites
 #' @param timer Time stratification variable
+#' @param labelID Label ID (TRUE) or not (FALSE)?  Default is TRUE
 #'
 #' @return Plot
 #' @export
@@ -73,7 +74,7 @@ biplot_raw_source <- function(data = refvals, title = "IsoSpaceFoodSourceDist", 
 #' @examples
 #' #Add later
 biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawSourceandConsumer", Sites = 1,
-                               timer = "Stat"){
+                               timer = "Stat", labelID = TRUE){
 
   data <- mixdata %>% dplyr::rename(Group = Site, ID = UniqueID) %>%
     dplyr::bind_rows(refdata %>% dplyr::mutate(Stat = "Source",
@@ -99,8 +100,12 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
     ggplot2::guides(fill=ggplot2::guide_legend(nrow=2, byrow=TRUE)) +
     ggplot2::ggtitle(title) +
     ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)"))) +
-    ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)")))
+
+  if (labelID == TRUE){
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
+  }
 
   # if (Sites == 1){
   #   # library(scales)
@@ -225,6 +230,7 @@ source_biplot <- function(data = refvals, Group = Group, var1 = d15N, var2 = d13
 #' @param Sites Number of sites
 #' @param title Title
 #' @param timer Time stratification variable
+#' @param labelID Label ID (TRUE) or not (FALSE)?  Default is TRUE
 #'
 #' @return A plot
 #' @export
@@ -232,7 +238,7 @@ source_biplot <- function(data = refvals, Group = Group, var1 = d15N, var2 = d13
 #' @examples
 #' #Add later
 sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "IsoSpaceSSRC",
-                             timer = "Stat"){
+                             timer = "Stat", labelID = TRUE){
 
   # Get edge data for sources
   combined_summary <- refdata %>%
@@ -316,8 +322,12 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
     ggplot2::geom_errorbarh(ggplot2::aes(xmin=d15N_mean-d15N_sd, xmax=d15N_mean+d15N_sd)) +
     ggplot2::geom_point(ggplot2::aes(x=d15N_mean, y=d13C_mean, colour=Group)) +
     ggplot2::xlab(expression(paste(delta^{15}, "N (\u2030)"))) +
-    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)"))) +
-    ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
+    ggplot2::ylab(expression(paste(delta^{13}, "C (\u2030)")))
+
+  if (labelID == TRUE){
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(label=ID), hjust=0, vjust=0, show.legend = FALSE)
+  }
 
   if (Sites == 1){
     if (source_level == "Om Kloster"){

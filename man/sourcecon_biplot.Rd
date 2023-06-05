@@ -9,7 +9,8 @@ sourcecon_biplot(
   mixdata,
   Sites = 1,
   title = "IsoSpaceSSRC",
-  timer = "Stat"
+  timer = "Stat",
+  labelID = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ sourcecon_biplot(
 \item{title}{Title}
 
 \item{timer}{Time stratification variable}
+
+\item{labelID}{Label ID (TRUE) or not (FALSE)?  Default is TRUE}
 }
 \value{
 A plot

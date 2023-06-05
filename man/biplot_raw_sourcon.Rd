@@ -9,7 +9,8 @@ biplot_raw_sourcon(
   mixdata,
   title = "IsoSpaceRawSourceandConsumer",
   Sites = 1,
-  timer = "Stat"
+  timer = "Stat",
+  labelID = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ biplot_raw_sourcon(
 \item{Sites}{Number of sites}
 
 \item{timer}{Time stratification variable}
+
+\item{labelID}{Label ID (TRUE) or not (FALSE)?  Default is TRUE}
 }
 \value{
 Plot
