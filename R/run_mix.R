@@ -198,7 +198,7 @@ run_mix <- function(mix_data,
     old <- options(pillar.sigfig = 5)
 
     if (is.null(grouper)){
-      data %>%
+      dtab <- data %>%
         dplyr::summarize(min = min(.data[[x]]),
                          q1 = stats::quantile(.data[[x]], 0.25),
                          median = stats::median(.data[[x]]),
@@ -209,7 +209,7 @@ run_mix <- function(mix_data,
                          n = dplyr::n()
                          )
     } else {
-      data %>%
+      dtab <- data %>%
         dplyr::group_by(.data[[grouper]]) %>%
         dplyr::summarize(min = min(.data[[x]]),
                          q1 = stats::quantile(.data[[x]], 0.25),
@@ -222,6 +222,8 @@ run_mix <- function(mix_data,
                          )
     }
     options(old)
+
+    return(dtab)
   }
 
   source_d13C <- summarize_func(refvals, "d13C")
