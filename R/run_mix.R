@@ -194,8 +194,10 @@ run_mix <- function(mix_data,
     purrr::map(file_list, file.remove)
   }
 
+  old <- options(pillar.sigfig = 5)
+
   summarize_func <- function(data, x, grouper = NULL){
-    old <- options(pillar.sigfig = 5)
+
 
     if (is.null(grouper)){
       dtab <- data %>%
@@ -221,7 +223,7 @@ run_mix <- function(mix_data,
                          n = dplyr::n()
                          )
     }
-    options(old)
+
 
     return(dtab)
   }
@@ -275,6 +277,8 @@ run_mix <- function(mix_data,
     cat("\n")
   }
 
+
+  options(old)
 
   out <- list(CHA = CHA, mix_run = mix_run)
 
