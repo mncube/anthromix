@@ -195,31 +195,33 @@ run_mix <- function(mix_data,
   }
 
   summarize_func <- function(data, x, grouper = NULL){
+    old <- options(pillar.sigfig = 5)
 
     if (is.null(grouper)){
       data %>%
-        dplyr::summarize(min = round(min(.data[[x]]), 3),
-                         q1 = round(stats::quantile(.data[[x]], 0.25), 3),
-                         median = round(stats::median(.data[[x]]), 3),
-                         q3 = round(stats::quantile(.data[[x]], 0.75), 3),
-                         max = round(max(.data[[x]]), 3),
-                         mean = round(mean(.data[[x]]), 3),
-                         sd = round(stats::sd(.data[[x]]), 3),
+        dplyr::summarize(min = min(.data[[x]]),
+                         q1 = stats::quantile(.data[[x]], 0.25),
+                         median = stats::median(.data[[x]]),
+                         q3 = stats::quantile(.data[[x]], 0.75),
+                         max = max(.data[[x]]),
+                         mean = mean(.data[[x]]),
+                         sd = stats::sd(.data[[x]]),
                          n = dplyr::n()
                          )
     } else {
       data %>%
         dplyr::group_by(.data[[grouper]]) %>%
-        dplyr::summarize(min = round(min(.data[[x]]), 3),
-                         q1 = round(stats::quantile(.data[[x]], 0.25), 3),
-                         median = round(stats::median(.data[[x]]), 3),
-                         q3 = round(stats::quantile(.data[[x]], 0.75), 3),
-                         max = round(max(.data[[x]]), 3),
-                         mean = round(mean(.data[[x]]), 3),
-                         sd = round(stats::sd(.data[[x]]), 3),
+        dplyr::summarize(min = min(.data[[x]]),
+                         q1 = stats::quantile(.data[[x]], 0.25),
+                         median = stats::median(.data[[x]]),
+                         q3 = stats::quantile(.data[[x]], 0.75),
+                         max = max(.data[[x]]),
+                         mean = mean(.data[[x]]),
+                         sd = stats::sd(.data[[x]]),
                          n = dplyr::n()
                          )
     }
+    options(old)
   }
 
   source_d13C <- summarize_func(refvals, "d13C")
