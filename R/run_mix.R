@@ -81,12 +81,18 @@ run_mix <- function(mix_data,
 
   # Plot Raw Source and Consumers
   biplot_raw_sourcon(mixdata = mix_data, Sites = Sites, timer = timer)
+  biplot_raw_sourcon(mixdata = mix_data, Sites = Sites, timer = timer,
+                     title = "IsoSpaceRawSourceandConsumerNoLabs",
+                     labelID = FALSE)
 
   # Plot Source Summary
   source_biplot()
 
   # Plot Source Summary Raw Consumer
   sourcecon_biplot(mixdata = mix_data, Sites = Sites, timer = timer)
+  sourcecon_biplot(mixdata = mix_data, Sites = Sites, timer = timer,
+                   title = "IsoSpaceSSRCNoLabs",
+                   labelID = FALSE)
 
   # Box Plot
   main_box(mixdata = mix_data)
@@ -151,8 +157,10 @@ run_mix <- function(mix_data,
                       "IsoSpaceFoodSourceDist.png",
                       "IsoSpaceFoodSourceDistlegend.png",
                       "IsoSpaceRawSourceandConsumer.png",
+                      "IsoSpaceRawSourceandConsumerNoLabs.png",
                       "IsoSpaceSourceSummary.png",
                       "IsoSpaceSSRC.png",
+                      "IsoSpaceSSRCNoLabs.png",
                       "d15N_box.png",
                       "d13C_box.png")
 
