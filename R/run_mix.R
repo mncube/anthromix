@@ -50,7 +50,9 @@ run_mix <- function(mix_data,
   if (rm_outs == TRUE){
     mix_data <- mix_data |>
       dplyr::mutate(d13C = ifelse(d13C %in% grDevices::boxplot.stats(mix_data[["d13C"]])$out, NA, d13C),
-                    d15N = ifelse(d15N %in% grDevices::boxplot.stats(mix_data[["d15N"]])$out, NA, d15N))
+                    d15N = ifelse(d15N %in% grDevices::boxplot.stats(mix_data[["d15N"]])$out, NA, d15N)) |>
+      tidyr::drop_na(d13C, d15N)
+
   }
 
   # Collect console output
@@ -305,8 +307,6 @@ run_mix <- function(mix_data,
   cat("Show outliers", "\n")
   print(outliers)
   cat("\n")
-
-
 
   options(old)
 
