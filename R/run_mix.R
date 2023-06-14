@@ -300,8 +300,11 @@ run_mix <- function(mix_data,
   print(comp_isos(mix_data, "d15N", timer, re = "Site",  mixed = mixed))
   cat("\n")
 
+  cat("Outliers Removed Before Running Analysis?", "\n",
+      rm_outs, "\n")
   cat("Show outliers", "\n")
   print(outliers)
+  cat("\n")
 
 
 
