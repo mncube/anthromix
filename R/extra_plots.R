@@ -115,8 +115,8 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
   # }
 
   if (Sites == 1){
-    if (source_level == "Om Kloster"){
-      conscolor <- c("Om Kloster" = "#00BFC4")
+    if (source_level == "Øm Kloster"){
+      conscolor <- c("Øm Kloster" = "#00BFC4")
     } else if (source_level == "St. Mikkel"){
       conscolor <- c("St. Mikkel" = "#D89000")
     } else if (source_level == "Ribe") {
@@ -125,7 +125,7 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
       conscolor = c("Tirup" = "#FF62BC")
     }
   } else {
-      conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
+      conscolor = c("Øm Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
                     "Ribe" = "#39B600", "Tirup" = "#FF62BC")
       }
 
@@ -142,10 +142,9 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                 "Monk" = "plus",
                 "Source" = "circle")
   } else if (timer == "Period"){
-    shapes <- c("A" = "square",
-                "B" = "triangle",
-                "C" = "plus",
-                "D" = "diamond",
+    shapes <- c("Early" = "square",
+                "Middle" = "triangle",
+                "Late" = "plus",
                 "Source" = "circle")
   }
 
@@ -330,8 +329,8 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
   }
 
   if (Sites == 1){
-    if (source_level == "Om Kloster"){
-      conscolor <- c("Om Kloster" = "#00BFC4")
+    if (source_level == "Øm Kloster"){
+      conscolor <- c("Øm Kloster" = "#00BFC4")
     } else if (source_level == "St. Mikkel"){
       conscolor <- c("St. Mikkel" = "#D89000")
     } else if (source_level == "Ribe") {
@@ -340,7 +339,7 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
       conscolor = c("Tirup" = "#FF62BC")
     }
   } else {
-      conscolor = c("Om Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
+      conscolor = c("Øm Kloster" = "#00BFC4", "St. Mikkel" = "#D89000",
                    "Ribe" = "#39B600", "Tirup" = "#FF62BC")
     }
 
@@ -357,10 +356,9 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                 "Monk" = "plus",
                 "Source" = "circle")
   } else if (timer == "Period"){
-    shapes <- c("A" = "square",
-                "B" = "triangle",
-                "C" = "plus",
-                "D" = "diamond",
+    shapes <- c("Early" = "square",
+                "Middle" = "triangle",
+                "Late" = "plus",
                 "Source" = "circle")
   }
 
