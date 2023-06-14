@@ -15,6 +15,7 @@
 #' @param Sites Number of sites in plot (1 or more than one)
 #' @param timer Timer variable (Stat or Period)
 #' @param mixed Use nlme for stat test (default is FALSE)
+#' @param rm_outs Remove outliers if TRUE (default is FALSE)
 #'
 #' @return MixSIAR Output
 #' @export
@@ -35,10 +36,22 @@ run_mix <- function(mix_data,
                     new_dir = "mixing_model_output",
                     Sites = 1,
                     timer = "Period",
-                    mixed = FALSE){
+                    mixed = FALSE,
+                    rm_outs = FALSE){
   #Drop NAs
   mix_data <- mix_data %>%
     tidyr::drop_na(d13C, d15N, tidyselect::any_of(timer))
+
+  # Outliers
+  outliers <- mix_data |>
+    dplyr::filter(d13C %in% grDevices::boxplot.stats(mix_data[["d13C"]])$out |
+                    d15N %in% grDevices::boxplot.stats(mix_data[["d15N"]])$out)
+
+  if (rm_outs == TRUE){
+    mix_data <- mix_data |>
+      dplyr::mutate(d13C = ifelse(d13C %in% grDevices::boxplot.stats(mix_data[["d13C"]])$out, NA, d13C),
+                    d15N = ifelse(d15N %in% grDevices::boxplot.stats(mix_data[["d15N"]])$out, NA, d15N))
+  }
 
   # Collect console output
   sink(file = "consoleoutput.txt")
@@ -286,6 +299,9 @@ run_mix <- function(mix_data,
   cat("Consumer Test: d15N", "\n")
   print(comp_isos(mix_data, "d15N", timer, re = "Site",  mixed = mixed))
   cat("\n")
+
+  cat("Show outliers", "\n")
+  print(outliers)
 
 
 

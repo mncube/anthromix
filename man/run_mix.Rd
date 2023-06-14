@@ -19,7 +19,8 @@ run_mix(
   new_dir = "mixing_model_output",
   Sites = 1,
   timer = "Period",
-  mixed = FALSE
+  mixed = FALSE,
+  rm_outs = FALSE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ run_mix(
 \item{timer}{Timer variable (Stat or Period)}
 
 \item{mixed}{Use nlme for stat test (default is FALSE)}
+
+\item{rm_outs}{Remove outliers if TRUE (default is FALSE)}
 }
 \value{
 MixSIAR Output
