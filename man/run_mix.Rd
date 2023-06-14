@@ -18,7 +18,8 @@ run_mix(
   run = "test",
   new_dir = "mixing_model_output",
   Sites = 1,
-  timer = "Period"
+  timer = "Period",
+  mixed = FALSE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ run_mix(
 \item{Sites}{Number of sites in plot (1 or more than one)}
 
 \item{timer}{Timer variable (Stat or Period)}
+
+\item{mixed}{Use nlme for stat test (default is FALSE)}
 }
 \value{
 MixSIAR Output

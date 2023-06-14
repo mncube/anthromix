@@ -25,6 +25,7 @@ Imports:
     ggpubr,
     magrittr,
     MixSIAR,
+    nlme,
     purrr,
     tidyr,
     tidyselect

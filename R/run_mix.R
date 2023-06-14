@@ -14,6 +14,7 @@
 #' @param new_dir Pass create directory name to mixsiar_save
 #' @param Sites Number of sites in plot (1 or more than one)
 #' @param timer Timer variable (Stat or Period)
+#' @param mixed Use nlme for stat test (default is FALSE)
 #'
 #' @return MixSIAR Output
 #' @export
@@ -33,7 +34,8 @@ run_mix <- function(mix_data,
                     run = "test",
                     new_dir = "mixing_model_output",
                     Sites = 1,
-                    timer = "Period"){
+                    timer = "Period",
+                    mixed = FALSE){
   #Drop NAs
   mix_data <- mix_data %>%
     tidyr::drop_na(d13C, d15N, tidyselect::any_of(timer))
@@ -276,6 +278,15 @@ run_mix <- function(mix_data,
     print(cons_d15N_Site)
     cat("\n")
   }
+
+
+  cat("Consumer Test: d13C", "\n")
+  print(comp_isos(mix_data, "d13C", timer, re = "Site", mixed = mixed))
+  cat("\n")
+  cat("Consumer Test: d15N", "\n")
+  print(comp_isos(mix_data, "d15N", timer, re = "Site",  mixed = mixed))
+  cat("\n")
+
 
 
   options(old)

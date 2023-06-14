@@ -3,6 +3,7 @@
 export("%>%")
 export(biplot_raw_source)
 export(biplot_raw_sourcon)
+export(comp_isos)
 export(main_box)
 export(run_mix)
 export(source_biplot)
