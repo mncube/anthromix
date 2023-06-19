@@ -68,6 +68,44 @@
 #' }
 "tab3"
 
+#' Tab 4: OM Monk/Time Comparison
+#'
+#' Looking at only Monks (2) and comparing them over the three time periods
+#' (A, B, and C/D)
+#'
+#'
+#' @format ## `tab4`
+#' A data frame with 13 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab4"
+
+#' Tab 5:OM Elite/Time Comparison
+#'
+#' Looking at only Elite (1) and comparing them over the three time periods
+#' (A, B, and C/D).
+#'
+#'
+#' @format ## `tab5`
+#' A data frame with 29 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab5"
+
 #' Tab 9: All Site Peasants/Time Comparison
 #'
 #' This takes the Peasants (0) from all 4 sites (OM, SM, Tirup, Ribe) and compares
