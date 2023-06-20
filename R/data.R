@@ -106,6 +106,26 @@
 #' }
 "tab5"
 
+#' Tab 6:SM Peasant/Time Comparison
+#'
+#' SM is St. Mikkel.  This is comparing Peasants (0) and comparing them over the
+#' three time periods (A, B, and C/D).  There were no samples of monks or elite
+#' in SM so no additional comparisons.
+#'
+#'
+#' @format ## `tab6`
+#' A data frame with 59 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab6"
+
 #' Tab 9: All Site Peasants/Time Comparison
 #'
 #' This takes the Peasants (0) from all 4 sites (OM, SM, Tirup, Ribe) and compares
