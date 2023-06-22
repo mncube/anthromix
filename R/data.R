@@ -126,6 +126,46 @@
 #' }
 "tab6"
 
+#' Tab 7:Ribe Peasant/Time Comparison
+#'
+#' Ribe is Ribe (not short for anything).  This is comparing Peasants (0) and
+#' comparing them over the three time periods (A, B, and C/D).  There were no
+#' samples of monks or elite in Ribe so no additional comparisons.
+#'
+#'
+#' @format ## `tab7`
+#' A data frame with 54 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab7"
+
+#' Tab 8:Tirup Peasant/Time Comparison
+#'
+#' Tirup is Tirup (again not short for anything). This is comparing Peasants (0)
+#' and comparing them over the three time periods (A, B, and C/D).  There were no
+#' samples of monks or elite in Tirup so no additional comparisons.
+#'
+#'
+#' @format ## `tab8`
+#' A data frame with 32 rows and 7 columns:
+#' \describe{
+#'   \item{Site}{#}
+#'   \item{UniqueID}{#}
+#'   \item{d15N}{#}
+#'   \item{d13C}{#}
+#'   \item{Period}{#}
+#'   \item{Stat}{#}
+#'   \item{Stat Period}{#}
+#' }
+"tab8"
+
 #' Tab 9: All Site Peasants/Time Comparison
 #'
 #' This takes the Peasants (0) from all 4 sites (OM, SM, Tirup, Ribe) and compares
