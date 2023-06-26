@@ -12,10 +12,10 @@ tab9 <- readxl::read_excel("./rawdatafiles/Data for MixSIAR.xlsx",
   dplyr::mutate(d15N = readr::parse_number(d15N),
                 d13C = readr::parse_number(d13C)) %>%
   tidyr::drop_na(d15N, d13C) %>%
-  dplyr::mutate(Period = dplyr::case_when(Period == "a" ~ "Early",
-                                          Period == "b" ~ "Middle",
-                                          Period == "c" ~ "Late",
-                                          Period == "d" ~ "Late",
+  dplyr::mutate(Period = dplyr::case_when(Period == "a" | Period == "A" ~ "Early",
+                                          Period == "b" | Period == "B" ~ "Middle",
+                                          Period == "c" | Period == "C" ~ "Late",
+                                          Period == "d" | Period == "D" ~ "Late",
                                           TRUE ~ Period)) %>%
   dplyr::mutate(Period = factor(Period, levels = c("Early", "Middle", "Late"),
                                 labels = c("Early", "Middle", "Late"))) %>%
