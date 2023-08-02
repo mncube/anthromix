@@ -76,12 +76,17 @@ biplot_raw_source <- function(data = refvals, title = "IsoSpaceFoodSourceDist", 
 biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawSourceandConsumer", Sites = 1,
                                timer = "Stat", labelID = TRUE){
 
+
   data <- mixdata %>% dplyr::rename(Group = Site, ID = UniqueID) %>%
     dplyr::bind_rows(refdata %>% dplyr::mutate(Stat = "Source",
                                                Period = "Source",
                                                `Stat Period` = "Source") %>%
                        dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), as.factor))) %>%
     dplyr::mutate(dplyr::across(c("Stat", "Period", "Stat Period"), ~forcats::fct_relevel(., "Source", after = Inf)))
+
+  if (timer == "Site"){
+    data <- data |> dplyr::mutate(Type = factor(ifelse(Stat == "Source", "Source", "Consumer")))
+  }
 
   source_level <-
     c(unique(data$Group))[!(unique(data$Group) %in%
@@ -94,7 +99,13 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                                                 labels = c("C3 Plants", "Freshwater Fish", "Marine Protein", "Terrestrial Protein",
                                                            source_level)))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes(x = d15N, y = d13C, colour = Group, shape = .data[[timer]])) +
+  if (timer == "Site"){
+    p <- ggplot2::ggplot(data, ggplot2::aes(x = d15N, y = d13C, colour = Group, shape = Type))
+  } else {
+    p <- ggplot2::ggplot(data, ggplot2::aes(x = d15N, y = d13C, colour = Group, shape = .data[[timer]]))
+  }
+
+  p <- p +
     ggplot2::geom_point(alpha = 0.7, size = 2) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", legend.box = "vertical") +
     ggplot2::guides(fill=ggplot2::guide_legend(nrow=2, byrow=TRUE)) +
@@ -146,9 +157,15 @@ biplot_raw_sourcon <- function(refdata = refvals, mixdata, title = "IsoSpaceRawS
                 "Middle" = "triangle",
                 "Late" = "plus",
                 "Source" = "circle")
+  } else if (timer == "Site"){
+    shapes <- c("Consumer" = "square",
+                "Source" = "circle")
   }
 
-  p <- p + ggplot2::scale_shape_manual(values = c(shapes))
+  p <- p + ggplot2::scale_shape_manual(values = c(shapes),
+                                       name = ggplot2::waiver(),
+                                       ggplot2::guide_legend(order = 1)) #+
+    #ggplot2::guides(shape = ggplot2::guide_legend(order = 1))
 
   #Create titles to save graphs
   title_plot <- paste0(title, ".png")
@@ -313,8 +330,17 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                                  labels = c("C3 Plants", "Freshwater Fish", "Marine Protein", "Terrestrial Protein",
                                             source_level)))
 
+  if (timer == "Site"){
+    data <- data |> dplyr::mutate(Type = factor(ifelse(Stat == "Source", "Source", "Consumer")))
+  }
+
   #Create raw data isospace plot
-  p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d15N_edge, y= d13C_edge, colour =Group, shape = .data[[timer]])) +
+  if (timer == "Site"){
+    p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d15N_edge, y= d13C_edge, colour =Group, shape = Type))
+  } else {
+    p <- ggplot2::ggplot(data = data, ggplot2::aes(x= d15N_edge, y= d13C_edge, colour =Group, shape = .data[[timer]]))
+  }
+  p <- p +
     ggplot2::geom_point(size = 0.1, stroke = 0) +
     ggplot2::geom_point(ggplot2::aes(x=d15N_mean, y= d13C_mean, colour=Group)) +
     ggplot2::geom_errorbar(ggplot2::aes(ymin=d13C_mean-d13C_sd, ymax=d13C_mean+d13C_sd)) +
@@ -360,9 +386,14 @@ sourcecon_biplot <- function(refdata = refvals, mixdata, Sites = 1, title = "Iso
                 "Middle" = "triangle",
                 "Late" = "plus",
                 "Source" = "circle")
+  } else if (timer == "Site"){
+    shapes <- c("Consumer" = "square",
+                "Source" = "circle")
   }
 
-  p <- p + ggplot2::scale_shape_manual(values = c(shapes))
+  p <- p + ggplot2::scale_shape_manual(values = c(shapes),
+                                       name = ggplot2::waiver(),
+                                       ggplot2::guide_legend(order = 1))
 
   #Create titles to save graphs
   title_plot <- paste0(title, ".png")
